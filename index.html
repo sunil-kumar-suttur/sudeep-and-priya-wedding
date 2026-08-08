@@ -1,0 +1,2224 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sudeep & Priya — Wedding Invitation, Mysuru</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Petit+Formal+Script&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ivory: #fbf3e4;
+        --ivory-deep: #f3e7ce;
+        --maroon: #6b1029;
+        --maroon-deep: #4a0b1c;
+        --gold: #c6963c;
+        --gold-light: #e9cd8b;
+        --ink: #2a1810;
+        --bronze: #8a5a2e;
+        --shadow: 0 20px 60px rgba(42, 24, 16, 0.25);
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--ivory);
+        color: var(--ink);
+        font-family: "EB Garamond", serif;
+        overflow-x: hidden;
+        position: relative;
+      }
+      ::selection {
+        background: var(--gold-light);
+        color: var(--maroon-deep);
+      }
+
+      .eyebrow {
+        font-family: "Cinzel", serif;
+        letter-spacing: 0.28em;
+        font-size: 0.72rem;
+        color: var(--maroon);
+        text-transform: uppercase;
+      }
+      h1,
+      h2,
+      h3 {
+        font-family: "Cormorant Garamond", serif;
+        font-weight: 600;
+        color: var(--maroon-deep);
+      }
+      .script {
+        font-family: "Petit Formal Script", cursive;
+        color: var(--maroon);
+      }
+
+      /* ---------- ambient texture background ---------- */
+      #petals {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 2;
+      }
+
+      /* ---------- entrance: invitation opening in four pieces ---------- */
+      #doors {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+      }
+      #doors::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(var(--gold-light) 0 0) center/2px 100% no-repeat,
+          linear-gradient(90deg, var(--gold-light) 0 0) center/100% 2px
+            no-repeat;
+        opacity: 0.35;
+        z-index: 0;
+        transition: opacity 0.5s ease;
+      }
+      /* fade the fold-line seam out together with the panels, instead of
+         leaving it visible until #doors gets visibility:hidden */
+      #doors.open::before {
+        opacity: 0;
+        transition-delay: 0.5s;
+      }
+      .panel {
+        position: absolute;
+        width: 50%;
+        height: 50%;
+        background: radial-gradient(
+          circle at 50% 50%,
+          var(--maroon) 0%,
+          var(--maroon-deep) 75%
+        );
+        box-shadow: inset 0 0 90px rgba(0, 0, 0, 0.45);
+        transition:
+          transform 1.5s cubic-bezier(0.76, 0, 0.24, 1),
+          opacity 1.5s ease;
+        z-index: 1;
+      }
+      .panel::before {
+        content: "";
+        position: absolute;
+        border: 1.5px solid var(--gold);
+        opacity: 0.7;
+      }
+      .panel.tl {
+        top: 0;
+        left: 0;
+        transform-origin: top left;
+      }
+      .panel.tr {
+        top: 0;
+        right: 0;
+        transform-origin: top right;
+      }
+      .panel.bl {
+        bottom: 0;
+        left: 0;
+        transform-origin: bottom left;
+      }
+      .panel.br {
+        bottom: 0;
+        right: 0;
+        transform-origin: bottom right;
+      }
+      .panel.tl::before {
+        top: 16px;
+        left: 16px;
+        right: 6px;
+        bottom: 6px;
+        border-right: none;
+        border-bottom: none;
+      }
+      .panel.tr::before {
+        top: 16px;
+        right: 16px;
+        left: 6px;
+        bottom: 6px;
+        border-left: none;
+        border-bottom: none;
+      }
+      .panel.bl::before {
+        bottom: 16px;
+        left: 16px;
+        right: 6px;
+        top: 6px;
+        border-right: none;
+        border-top: none;
+      }
+      .panel.br::before {
+        bottom: 16px;
+        right: 16px;
+        left: 6px;
+        top: 6px;
+        border-left: none;
+        border-top: none;
+      }
+
+      .panel.tl::after {
+        top: 26px;
+        left: 26px;
+      }
+      .panel.tr::after {
+        top: 26px;
+        right: 26px;
+      }
+      .panel.bl::after {
+        bottom: 26px;
+        left: 26px;
+      }
+      .panel.br::after {
+        bottom: 26px;
+        right: 26px;
+      }
+
+      #doors.open .panel.tl {
+        transform: translate(-46%, -46%) rotate(-14deg) scale(0.94);
+        opacity: 0;
+        transition-delay: 0s;
+      }
+      #doors.open .panel.tr {
+        transform: translate(46%, -46%) rotate(14deg) scale(0.94);
+        opacity: 0;
+        transition-delay: 0.08s;
+      }
+      #doors.open .panel.bl {
+        transform: translate(-46%, 46%) rotate(14deg) scale(0.94);
+        opacity: 0;
+        transition-delay: 0.16s;
+      }
+      #doors.open .panel.br {
+        transform: translate(46%, 46%) rotate(-14deg) scale(0.94);
+        opacity: 0;
+        transition-delay: 0.24s;
+      }
+      #doors.hidden {
+        visibility: hidden;
+      }
+      #enter-cue {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: var(--gold-light);
+        font-family: "Cinzel", serif;
+        letter-spacing: 0.3em;
+        font-size: 0.75rem;
+        text-align: center;
+        z-index: 2;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 14px;
+        opacity: 1;
+        transition: opacity 0.5s ease;
+      }
+      #doors.open #enter-cue {
+        opacity: 0;
+        transition-delay: 0.9s;
+      }
+      #enter-cue.hide {
+        opacity: 0 !important;
+        transition: opacity 0.2s ease !important;
+        transition-delay: 0s !important;
+        pointer-events: none;
+      }
+      #enter-cue .ring {
+        width: 64px;
+        height: 64px;
+        border: 1px solid var(--gold);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: pulseRing 2.6s ease-in-out infinite;
+        font-family: "Cinzel", serif;
+        font-size: 0.62rem;
+        letter-spacing: 0.16em;
+        color: var(--gold-light);
+      }
+      #enter-cue .ring.tapped {
+        animation: none;
+        box-shadow: none;
+      }
+      @keyframes pulseRing {
+        0%,
+        100% {
+          box-shadow: 0 0 0 0 rgba(198, 150, 60, 0.4);
+        }
+        50% {
+          box-shadow: 0 0 0 14px rgba(198, 150, 60, 0);
+        }
+      }
+
+      /* ---------- top controls ---------- */
+      #music-controls {
+        position: fixed;
+        top: 16px;
+        left: 16px;
+        z-index: 500;
+      }
+      #controls {
+        position: fixed;
+        top: 16px;
+        right: 16px;
+        z-index: 500;
+        display: flex;
+        gap: 10px;
+      }
+      .ctrl-btn {
+        background: rgba(251, 243, 228, 0.92);
+        border: 1px solid var(--gold);
+        color: var(--maroon-deep);
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: var(--shadow);
+        transition:
+          transform 0.25s ease,
+          background 0.25s ease;
+      }
+      .ctrl-btn:hover {
+        transform: scale(1.08);
+        background: var(--gold-light);
+      }
+      .ctrl-btn svg {
+        width: 15px;
+        height: 15px;
+      }
+
+      #lang-toggle {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        background: rgba(251, 243, 228, 0.92);
+        border: 1px solid var(--gold);
+        border-radius: 22px;
+        padding: 4px;
+        height: 30px;
+        box-shadow: var(--shadow);
+        cursor: pointer;
+        display:none;
+      }
+      .lang-opt {
+        padding: 0 12px;
+        height: 21px;
+        border-radius: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Cinzel", serif;
+        font-size: 0.62rem;
+        letter-spacing: 0.05em;
+        color: var(--maroon-deep);
+        transition:
+          background 0.25s ease,
+          color 0.25s ease;
+        white-space: nowrap;
+      }
+      .lang-opt.active {
+        background: var(--maroon-deep);
+        color: var(--ivory);
+      }
+
+      /* ---------- couple photo placeholders ---------- */
+      .couple-photos {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 60px;
+        margin-bottom: 28px;
+      }
+      .photo-frame {
+        width: 130px;
+        height: 130px;
+        border-radius: 50%;
+        border: 2px dashed var(--gold);
+        background: repeating-linear-gradient(
+          135deg,
+          var(--ivory-deep),
+          var(--ivory-deep) 10px,
+          var(--ivory) 10px,
+          var(--ivory) 20px
+        );
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: var(--bronze);
+        position: relative;
+        box-shadow: var(--shadow);
+      }
+      .photo-frame:first-child {
+        margin-right: -16px;
+        z-index: 2;
+      }
+      .photo-frame:last-child {
+        margin-left: -16px;
+        z-index: 1;
+      }
+      .photo-frame svg {
+        width: 38px;
+        height: 38px;
+        opacity: 0.55;
+        margin-bottom: 6px;
+      }
+      .photo-frame .ph-label {
+        font-family: "Cinzel", serif;
+        font-size: 0.6rem;
+        letter-spacing: 0.12em;
+      }
+      .photo-frame img.couple-photo-img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+        z-index: 2;
+      }
+      @media (max-width: 420px) {
+        .photo-frame {
+          width: 104px;
+          height: 104px;
+        }
+      }
+
+      /* ---------- sections ---------- */
+      section {
+        position: relative;
+        padding: 110px 20px;
+        max-width: 1000px;
+        margin: 0 auto;
+        z-index: 3;
+      }
+      .frame {
+        position: relative;
+      }
+      .reveal {
+        opacity: 0;
+        transform: translateY(28px);
+        transition:
+          opacity 0.9s ease,
+          transform 0.9s ease;
+      }
+      .reveal.in {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .divider {
+        width: 120px;
+        height: auto;
+        margin: 22px auto;
+        opacity: 0.85;
+      }
+
+      /* ---------- hero ---------- */
+      #hero {
+        min-height: 100svh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 40px 20px;
+      }
+      #hero .corner {
+        position: absolute;
+        width: 90px;
+        height: 90px;
+        opacity: 0.75;
+      }
+      #hero .corner.tl {
+        top: 24px;
+        left: 24px;
+      }
+      #hero .corner.tr {
+        top: 24px;
+        right: 24px;
+        transform: scaleX(-1);
+      }
+      #hero .corner.bl {
+        bottom: 24px;
+        left: 24px;
+        transform: scaleY(-1);
+      }
+      #hero .corner.br {
+        bottom: 24px;
+        right: 24px;
+        transform: scale(-1, -1);
+      }
+      #hero .names {
+        font-size: clamp(3rem, 9vw, 6.4rem);
+        line-height: 1;
+        margin: 18px 0;
+        color: var(--maroon-deep);
+      }
+      #hero .amp {
+        font-family: "Petit Formal Script", cursive;
+        color: var(--gold);
+        font-size: 0.6em;
+        padding: 0 0.12em;
+      }
+      #hero .tagline {
+        font-size: 1.2rem;
+        font-style: italic;
+        color: var(--bronze);
+        max-width: 420px;
+      }
+      #hero .scroll-cue {
+        margin-top: 56px;
+        font-family: "Cinzel", serif;
+        font-size: 0.68rem;
+        letter-spacing: 0.3em;
+        color: var(--maroon);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      }
+      #hero .scroll-cue .line {
+        width: 1px;
+        height: 38px;
+        background: linear-gradient(var(--gold), transparent);
+        animation: dropLine 2.2s ease-in-out infinite;
+      }
+      @keyframes dropLine {
+        0% {
+          transform: scaleY(0);
+          transform-origin: top;
+        }
+        50% {
+          transform: scaleY(1);
+          transform-origin: top;
+        }
+        51% {
+          transform-origin: bottom;
+        }
+        100% {
+          transform: scaleY(0);
+          transform-origin: bottom;
+        }
+      }
+
+      /* ---------- scratch card ---------- */
+      #scratch-wrap {
+        text-align: center;
+      }
+      #scratch-card {
+        position: relative;
+        width: min(420px, 88vw);
+        aspect-ratio: 4/5;
+        margin: 38px auto 0;
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        border: 1px solid var(--gold);
+      }
+      #scratch-under {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(160deg, var(--maroon-deep), var(--maroon));
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: var(--ivory);
+        text-align: center;
+        padding: 20px;
+      }
+      #scratch-under .event-block {
+        padding: 14px 0;
+      }
+      #scratch-under .event-label {
+        font-family: "Cinzel", serif;
+        font-size: 0.66rem;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: var(--gold-light);
+      }
+      #scratch-under .event-date {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(1.7rem, 5.2vw, 2.5rem);
+        color: var(--ivory);
+        letter-spacing: 0.03em;
+        margin-top: 6px;
+      }
+      #scratch-under .event-time {
+        font-family: "Cinzel", serif;
+        letter-spacing: 0.14em;
+        font-size: 0.72rem;
+        margin-top: 4px;
+        color: var(--ivory-deep);
+      }
+      #scratch-under .event-divider {
+        width: 70px;
+        height: 1px;
+        background: var(--gold);
+        opacity: 0.55;
+        margin: 6px auto;
+      }
+      #scratch-canvas {
+        position: absolute;
+        inset: 0;
+        touch-action: none;
+        cursor: grab;
+      }
+      #scratch-hint {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        text-align: center;
+        transform: translateY(-50%);
+        font-family: "Cinzel", serif;
+        font-size: 1rem;
+        letter-spacing: 0.22em;
+        color: var(--maroon-deep);
+        opacity: 0.85;
+        pointer-events: none;
+        transition: opacity 0.4s ease;
+      }
+      #scratch-card.scratching #scratch-hint {
+        opacity: 0;
+      }
+      #scratch-card.revealed #scratch-hint {
+        opacity: 0;
+      }
+      #scratch-card.revealed #scratch-canvas {
+        pointer-events: none;
+      }
+
+      /* ---------- premium reveal flourish ---------- */
+      #scratch-under .event-block {
+        opacity: 0;
+        transform: translateY(14px) scale(0.94);
+      }
+      #scratch-card.revealed #scratch-under .event-block {
+        animation: eventPop 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+      }
+      #scratch-card.revealed #scratch-under .event-block:nth-child(1) {
+        animation-delay: 0.25s;
+      }
+      #scratch-card.revealed #scratch-under .event-block:nth-child(3) {
+        animation-delay: 0.45s;
+      }
+      @keyframes eventPop {
+        0% {
+          opacity: 0;
+          transform: translateY(14px) scale(0.94);
+        }
+        60% {
+          opacity: 1;
+          transform: translateY(-3px) scale(1.03);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+      #scratch-under .event-divider {
+        transform: scaleX(0);
+      }
+      #scratch-card.revealed #scratch-under .event-divider {
+        animation: dividerGrow 0.7s ease forwards;
+        animation-delay: 0.4s;
+      }
+      @keyframes dividerGrow {
+        to {
+          transform: scaleX(1);
+        }
+      }
+
+      #scratch-shimmer {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 5;
+        background: linear-gradient(
+          115deg,
+          transparent 30%,
+          rgba(255, 255, 255, 0.55) 48%,
+          rgba(255, 241, 199, 0.85) 52%,
+          transparent 68%
+        );
+        transform: translateX(-140%);
+        opacity: 0;
+      }
+      #scratch-card.revealed #scratch-shimmer {
+        animation: shimmerSweep 1.1s ease-out forwards;
+        animation-delay: 0.15s;
+      }
+      @keyframes shimmerSweep {
+        0% {
+          transform: translateX(-140%);
+          opacity: 0;
+        }
+        12% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateX(140%);
+          opacity: 0;
+        }
+      }
+
+      #scratch-card.revealed {
+        animation: cardGlow 1.6s ease-out;
+      }
+      @keyframes cardGlow {
+        0% {
+          box-shadow:
+            var(--shadow),
+            0 0 0 0 rgba(198, 150, 60, 0);
+        }
+        35% {
+          box-shadow:
+            var(--shadow),
+            0 0 40px 6px rgba(198, 150, 60, 0.55);
+        }
+        100% {
+          box-shadow:
+            var(--shadow),
+            0 0 0 0 rgba(198, 150, 60, 0);
+        }
+      }
+
+      #burst-layer {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 6;
+        overflow: visible;
+      }
+
+      /* central flash + expanding shockwave rings behind the confetti */
+      .burst-flash {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          #fff 0%,
+          var(--gold-light) 40%,
+          transparent 72%
+        );
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+      }
+      #scratch-card.revealed .burst-flash {
+        animation: burstFlash 0.6s ease-out forwards;
+      }
+      @keyframes burstFlash {
+        0% {
+          opacity: 0.95;
+          transform: translate(-50%, -50%) scale(0.2);
+        }
+        100% {
+          opacity: 0;
+          transform: translate(-50%, -50%) scale(7);
+        }
+      }
+
+      .burst-ring {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        border: 2px solid var(--ring-color, var(--gold-light));
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+      }
+      #scratch-card.revealed .burst-ring {
+        animation: burstRing 0.9s cubic-bezier(0.15, 0.7, 0.3, 1) forwards;
+      }
+      @keyframes burstRing {
+        0% {
+          opacity: 0.9;
+          transform: translate(-50%, -50%) scale(0.3);
+        }
+        100% {
+          opacity: 0;
+          transform: translate(-50%, -50%) scale(9);
+        }
+      }
+
+      /* confetti pieces: mixed circles/squares in festive colors, spinning as they fly */
+      .burst-dot {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: var(--bsize, 7px);
+        height: var(--bsize, 7px);
+        border-radius: var(--bshape, 50%);
+        background: var(--bcolor, var(--gold-light));
+        opacity: 0;
+        box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.08);
+      }
+      #scratch-card.revealed .burst-dot {
+        animation: burstOut 1.15s cubic-bezier(0.15, 0.65, 0.25, 1) forwards;
+      }
+      @keyframes burstOut {
+        0% {
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(1) rotate(0deg);
+        }
+        65% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+          transform: translate(calc(-50% + var(--bx)), calc(-50% + var(--by)))
+            scale(0.3) rotate(var(--brot, 360deg));
+        }
+      }
+
+      /* ---------- photo gallery: stacked photo-pile carousel ---------- */
+      #gallery-wrap {
+        text-align: center;
+      }
+      #gallery {
+        position: relative;
+        width: min(380px, 82vw);
+        aspect-ratio: 4/5;
+        margin: 50px auto 0;
+        overflow: visible;
+        touch-action: pan-y;
+      }
+      .gallery-slide {
+        position: absolute;
+        inset: 0;
+        border-radius: 10px;
+        background: #fff;
+        padding: 9px 9px 30px;
+        box-shadow: 0 16px 36px rgba(42, 24, 16, 0.3);
+        transition:
+          transform 0.55s cubic-bezier(0.22, 0.9, 0.32, 1),
+          opacity 0.45s ease,
+          box-shadow 0.4s ease;
+        cursor: grab;
+        touch-action: pan-y;
+      }
+      .gallery-slide:active {
+        cursor: grabbing;
+      }
+      .gallery-slide.dragging {
+        transition: none;
+      }
+      .gallery-photo-inner {
+        width: 100%;
+        height: 100%;
+        border-radius: 5px;
+        overflow: hidden;
+        position: relative;
+        background: repeating-linear-gradient(
+          135deg,
+          var(--ivory-deep),
+          var(--ivory-deep) 10px,
+          var(--ivory) 10px,
+          var(--ivory) 20px
+        );
+      }
+      .gallery-photo-inner img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        -webkit-user-drag: none;
+        user-select: none;
+        -webkit-user-select: none;
+        pointer-events: none;
+      }
+      .gallery-ph {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        color: var(--bronze);
+        width: 100%;
+        height: 100%;
+      }
+      .gallery-ph svg {
+        width: 40px;
+        height: 40px;
+        opacity: 0.5;
+      }
+      .gallery-ph span {
+        font-family: "Cinzel", serif;
+        font-size: 0.6rem;
+        letter-spacing: 0.12em;
+      }
+      .gallery-slide .gallery-tag {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 6px;
+        text-align: center;
+        font-family: "Petit Formal Script", cursive;
+        color: var(--maroon);
+        font-size: 1.05rem;
+      }
+
+      .stack-pos-0 {
+        transform: translate(-50%, 0) rotate(-2.5deg) scale(1);
+        left: 50%;
+        z-index: 5;
+        opacity: 1;
+      }
+      .stack-pos-1 {
+        transform: translate(calc(-50% + 20px), 10px) rotate(7deg) scale(0.94);
+        left: 50%;
+        z-index: 4;
+        opacity: 1;
+      }
+      .stack-pos-2 {
+        transform: translate(calc(-50% - 22px), 16px) rotate(-8deg) scale(0.9);
+        left: 50%;
+        z-index: 3;
+        opacity: 1;
+      }
+      .stack-pos-3 {
+        transform: translate(-50%, 20px) rotate(0deg) scale(0.86);
+        left: 50%;
+        z-index: 2;
+        opacity: 0;
+        pointer-events: none;
+      }
+      .stack-pos-4 {
+        transform: translate(-50%, 20px) rotate(0deg) scale(0.82);
+        left: 50%;
+        z-index: 1;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      #gallery-dots {
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+        margin-top: 26px;
+      }
+      .gallery-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--gold-light);
+        opacity: 0.55;
+        cursor: pointer;
+        transition:
+          opacity 0.25s ease,
+          transform 0.25s ease;
+      }
+      .gallery-dot.active {
+        opacity: 1;
+        background: var(--maroon);
+        transform: scale(1.25);
+      }
+      #gallery-hint {
+        margin-top: 10px;
+        font-family: "Cinzel", serif;
+        font-size: 0.6rem;
+        letter-spacing: 0.16em;
+        color: var(--bronze);
+        opacity: 0.75;
+        text-transform: uppercase;
+      }
+
+      /* ---------- countdown ---------- */
+      #countdown-grid {
+        display: flex;
+        gap: 18px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 36px;
+      }
+      .cd-cell {
+        width: 96px;
+        padding: 18px 0;
+        border: 1px solid var(--gold);
+        background: linear-gradient(160deg, var(--ivory), var(--ivory-deep));
+        text-align: center;
+        box-shadow: var(--shadow);
+        border-radius: 6px;
+      }
+      .cd-num {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 2.4rem;
+        color: var(--maroon-deep);
+        font-weight: 700;
+      }
+      .cd-label {
+        font-family: "Cinzel", serif;
+        font-size: 0.6rem;
+        letter-spacing: 0.18em;
+        color: var(--bronze);
+        margin-top: 4px;
+      }
+
+      /* ---------- story ---------- */
+      #story p {
+        font-size: 1.15rem;
+        line-height: 1.9;
+        color: #3a281c;
+        max-width: 640px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      /* ---------- timeline ---------- */
+      .timeline {
+        position: relative;
+        margin-top: 50px;
+      }
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: linear-gradient(
+          var(--gold),
+          var(--gold-light),
+          var(--gold)
+        );
+        transform: translateX(-50%);
+      }
+      .tl-item {
+        position: relative;
+        width: 50%;
+        padding: 0 42px 60px;
+      }
+      .tl-item:nth-child(odd) {
+        left: 0;
+        text-align: right;
+      }
+      .tl-item:nth-child(even) {
+        left: 50%;
+        text-align: left;
+      }
+      .tl-item::before {
+        content: "";
+        position: absolute;
+        top: 6px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--gold);
+        border: 3px solid var(--ivory);
+        box-shadow: 0 0 0 1px var(--gold);
+      }
+      .tl-item:nth-child(odd)::before {
+        right: -6.5px;
+      }
+      .tl-item:nth-child(even)::before {
+        left: -6.5px;
+      }
+      .tl-item h3 {
+        font-size: 1.6rem;
+      }
+      .tl-item .when {
+        font-family: "Cinzel", serif;
+        font-size: 0.68rem;
+        letter-spacing: 0.14em;
+        color: var(--maroon);
+        margin: 6px 0;
+      }
+      .tl-item .where {
+        font-style: italic;
+        color: var(--bronze);
+      }
+      @media (max-width: 680px) {
+        .timeline::before {
+          left: 14px;
+        }
+        .tl-item,
+        .tl-item:nth-child(even) {
+          width: 100%;
+          left: 0;
+          text-align: left;
+          padding: 0 0 44px 42px;
+        }
+        .tl-item::before,
+        .tl-item:nth-child(even)::before {
+          left: 8px;
+        }
+      }
+
+      /* ---------- venue / map ---------- */
+      #venue-card {
+        text-align: center;
+        margin-top: 30px;
+      }
+      #map-embed {
+        width: 100%;
+        height: 340px;
+        border: 1px solid var(--gold);
+        border-radius: 8px;
+        margin-top: 26px;
+        filter: sepia(0.18) saturate(1.05);
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 18px;
+        font-family: "Cinzel", serif;
+        font-size: 0.7rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        background: var(--maroon-deep);
+        color: var(--ivory);
+        border: none;
+        padding: 14px 26px;
+        border-radius: 2px;
+        cursor: pointer;
+        text-decoration: none;
+        transition:
+          background 0.25s ease,
+          transform 0.2s ease;
+      }
+      .btn:hover {
+        background: var(--maroon);
+        transform: translateY(-2px);
+      }
+
+      /* ---------- footer ---------- */
+      footer {
+        text-align: center;
+        padding: 70px 20px 100px;
+        color: var(--bronze);
+      }
+      footer .script {
+        font-size: 2rem;
+        display: block;
+        margin-bottom: 10px;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation-duration: 0.001ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.001ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="petals"></canvas>
+    <audio id="bg-music" loop preload="auto" src="wedding-music.mp3"></audio>
+
+    <!-- Entrance: invitation opening in four pieces -->
+    <div id="doors">
+      <div class="panel tl"></div>
+      <div class="panel tr"></div>
+      <div class="panel bl"></div>
+      <div class="panel br"></div>
+      <div id="enter-cue">
+        <div class="ring">Tap</div>
+        <div>Tap to Open<br />Our Invitation</div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div id="music-controls">
+      <button
+        class="ctrl-btn"
+        id="music-btn"
+        title="Toggle music"
+        aria-label="Toggle background music"
+      >
+        <svg
+          id="music-icon-on"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.6"
+        >
+          <path d="M9 18V5l12-2v13" />
+          <circle cx="6" cy="18" r="3" />
+          <circle cx="18" cy="16" r="3" />
+        </svg>
+        <svg
+          id="music-icon-off"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.6"
+          style="display: none"
+        >
+          <path d="M9 18V5l12-2v13" />
+          <circle cx="6" cy="18" r="3" />
+          <circle cx="18" cy="16" r="3" />
+          <line x1="3" y1="3" x2="21" y2="21" />
+        </svg>
+      </button>
+    </div>
+
+    <div id="controls">
+      <div
+        id="lang-toggle"
+        role="button"
+        tabindex="0"
+        aria-label="Switch language"
+      >
+        <span class="lang-opt active" data-lang="en">EN</span>
+        <span class="lang-opt" data-lang="kn">ಕನ್ನಡ</span>
+      </div>
+    </div>
+
+    <!-- Hero -->
+    <section id="hero">
+      <div class="couple-photos reveal">
+        <div class="photo-frame">
+          <img
+            class="couple-photo-img"
+            src="groom.png"
+            alt="Groom"
+            draggable="false"
+            onerror="this.style.display = 'none'"
+          />
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.4"
+          >
+            <circle cx="12" cy="8" r="4" />
+            <path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8" />
+          </svg>
+          <span class="ph-label i18n" data-en="Groom Photo" data-kn="ವರನ ಫೋಟೋ"
+            >Groom Photo</span
+          >
+        </div>
+        <div class="photo-frame">
+          <img
+            class="couple-photo-img"
+            src="bride.png"
+            alt="Bride"
+            draggable="false"
+            onerror="this.style.display = 'none'"
+          />
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.4"
+          >
+            <circle cx="12" cy="8" r="4" />
+            <path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8" />
+          </svg>
+          <span
+            class="ph-label i18n"
+            data-en="Bride Photo"
+            data-kn="ವಧುವಿನ ಫೋಟೋ"
+            >Bride Photo</span
+          >
+        </div>
+      </div>
+      <div
+        class="eyebrow reveal i18n"
+        data-en="Together with their families"
+        data-kn="ಕುಟುಂಬಗಳ ಸಮ್ಮಿಲನದೊಂದಿಗೆ"
+      >
+        Together with their families
+      </div>
+      <h1 class="names reveal">Sudeep<span class="amp">&amp;</span>Priya</h1>
+      <img
+        class="divider"
+        src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 24'%3E%3Cline x1='0' y1='12' x2='80' y2='12' stroke='%23C6963C' stroke-width='1'/%3E%3Ctext x='100' y='17' font-size='16' fill='%23C6963C' text-anchor='middle' font-family='serif'%3E❦%3C/text%3E%3Cline x1='120' y1='12' x2='200' y2='12' stroke='%23C6963C' stroke-width='1'/%3E%3C/svg%3E"
+        alt=""
+      />
+      <p
+        class="tagline reveal i18n"
+        data-en="request the honour of your presence as they begin their forever"
+        data-kn="ಅವರ ಬಾಳ ಸಂಗಾತದ ಶುಭಾರಂಭದಲ್ಲಿ ನಿಮ್ಮ ಸಮ್ಮುಖವನ್ನು ಕೋರುತ್ತಿದ್ದಾರೆ"
+      >
+        request the honour of your presence as they begin their forever
+      </p>
+      <div class="scroll-cue">
+        <span class="i18n" data-en="Scroll to Begin" data-kn="ಮುಂದೆ ಸಾಗಿ"
+          >Scroll to Begin</span
+        >
+        <div class="line"></div>
+      </div>
+    </section>
+
+    <!-- Scratch reveal -->
+    <section id="scratch-wrap">
+      <div class="frame reveal">
+        <div class="eyebrow" style="text-align: center">✦ ✦ ✦</div>
+        <h2
+          style="text-align: center; font-size: 2.4rem"
+          class="i18n"
+          data-en="Scratch to Reveal Our Date"
+          data-kn="ನಮ್ಮ ದಿನಾಂಕವನ್ನು ಬಹಿರಂಗಪಡಿಸಲು ಸ್ಕ್ರಾಚ್ ಮಾಡಿ"
+        >
+          Scratch to Reveal Our Date
+        </h2>
+        <p
+          style="
+            text-align: center;
+            font-style: italic;
+            color: var(--bronze);
+            margin-top: 8px;
+          "
+          class="i18n"
+          data-en="Gently swipe the gold to uncover the day we say &ldquo;I do&rdquo;"
+          data-kn="ನಾವು ಮದುವೆಯಾಗುವ ದಿನವನ್ನು ತಿಳಿಯಲು ಚಿನ್ನದ ಮೇಲ್ಪದರವನ್ನು ನಿಧಾನವಾಗಿ ಉಜ್ಜಿರಿ"
+        >
+          Gently swipe the gold to uncover the day we say "I do"
+        </p>
+        <div id="scratch-card">
+          <div id="scratch-under">
+            <div class="event-block">
+              <div
+                class="event-label i18n"
+                data-en="Wedding Ceremony"
+                data-kn="ವಿವಾಹ ಸಮಾರಂಭ"
+              >
+                Wedding Ceremony
+              </div>
+              <div class="event-date">12 · 12 · 2026</div>
+              <div
+                class="event-time i18n"
+                data-en="Saturday · 11:00 AM"
+                data-kn="ಶನಿವಾರ · ಬೆಳಿಗ್ಗೆ 11:00"
+              >
+                Saturday · 11:00 AM
+              </div>
+            </div>
+            <div class="event-divider"></div>
+            <div class="event-block">
+              <div
+                class="event-label i18n"
+                data-en="Reception"
+                data-kn="ಸತ್ಕಾರ ಕೂಟ"
+              >
+                Reception
+              </div>
+              <div class="event-date">12 · 12 · 2026</div>
+              <div
+                class="event-time i18n"
+                data-en="Saturday · 7:00 PM"
+                data-kn="ಶನಿವಾರ · ಸಂಜೆ 7:00"
+              >
+                Saturday · 7:00 PM
+              </div>
+            </div>
+          </div>
+          <canvas id="scratch-canvas"></canvas>
+          <div
+            id="scratch-hint"
+            class="i18n"
+            data-en="✦ swipe to scratch ✦"
+            data-kn="✦ ಉಜ್ಜಲು ಸ್ವೈಪ್ ಮಾಡಿ ✦"
+          >
+            ✦ swipe to scratch ✦
+          </div>
+          <div id="scratch-shimmer"></div>
+          <div id="burst-layer"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Countdown -->
+    <section id="countdown">
+      <div class="frame reveal" style="text-align: center">
+        <h2
+          class="i18n"
+          data-en="Counting Down to Forever"
+          data-kn="ಶಾಶ್ವತತೆಯ ಕಡೆಗೆ ಎಣಿಕೆ"
+        >
+          Counting Down to Forever
+        </h2>
+        <div id="countdown-grid">
+          <div class="cd-cell">
+            <div class="cd-num" id="cd-days">00</div>
+            <div class="cd-label i18n" data-en="Days" data-kn="ದಿನಗಳು">
+              Days
+            </div>
+          </div>
+          <div class="cd-cell">
+            <div class="cd-num" id="cd-hours">00</div>
+            <div class="cd-label i18n" data-en="Hours" data-kn="ಗಂಟೆಗಳು">
+              Hours
+            </div>
+          </div>
+          <div class="cd-cell">
+            <div class="cd-num" id="cd-mins">00</div>
+            <div class="cd-label i18n" data-en="Minutes" data-kn="ನಿಮಿಷಗಳು">
+              Minutes
+            </div>
+          </div>
+          <div class="cd-cell">
+            <div class="cd-num" id="cd-secs">00</div>
+            <div class="cd-label i18n" data-en="Seconds" data-kn="ಸೆಕೆಂಡುಗಳು">
+              Seconds
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Story -->
+    <section id="story">
+      <div class="frame reveal" style="text-align: center">
+        <div class="eyebrow">✦ ✦ ✦</div>
+        <h2 class="i18n" data-en="Our Story" data-kn="ನಮ್ಮ ಕಥೆ">Our Story</h2>
+        <p
+          class="i18n"
+          data-en="What began as a quiet conversation over coffee turned into years of shared laughter, long drives, and small everyday adventures. Through every season, they found their steadiest home in each other. Now, surrounded by the people they love most, Sudeep and Priya are ready to begin the next chapter — as husband and wife."
+          data-kn="ಒಂದು ಕಪ್ ಕಾಫಿಯ ಮೌನ ಸಂಭಾಷಣೆಯಿಂದ ಪ್ರಾರಂಭವಾದದ್ದು, ವರ್ಷಗಳ ನಗು, ದೀರ್ಘ ಪ್ರಯಾಣಗಳು ಮತ್ತು ಪುಟ್ಟ ಪುಟ್ಟ ಸಾಹಸಗಳಾಗಿ ಬೆಳೆಯಿತು. ಪ್ರತಿ ಋತುವಿನಲ್ಲೂ ಅವರು ಒಬ್ಬರಲ್ಲೊಬ್ಬರು ತಮ್ಮ ಸ್ಥಿರ ಆಶ್ರಯವನ್ನು ಕಂಡುಕೊಂಡರು. ಈಗ, ತಮಗೆ ಪ್ರಿಯರಾದವರ ಸಮ್ಮುಖದಲ್ಲಿ, ದೇವಾಂಶ್ ಮತ್ತು ಅನಯಾ ಗಂಡ-ಹೆಂಡತಿಯಾಗಿ ಮುಂದಿನ ಅಧ್ಯಾಯವನ್ನು ಆರಂಭಿಸಲು ಸಿದ್ಧರಾಗಿದ್ದಾರೆ."
+        >
+          What began as a quiet conversation over coffee turned into years of
+          shared laughter, long drives, and small everyday adventures. Through
+          every season, they found their steadiest home in each other. Now,
+          surrounded by the people they love most, Sudeep and Priya are ready to
+          begin the next chapter — as husband and wife.
+        </p>
+      </div>
+    </section>
+
+    <!-- Gallery -->
+    <section id="gallery-wrap">
+      <div class="frame reveal">
+        <div class="eyebrow" style="text-align: center">✦ ✦ ✦</div>
+        <h2
+          style="text-align: center; font-size: 2.4rem"
+          class="i18n"
+          data-en="Our Moments Together"
+          data-kn="ನಮ್ಮ ಒಟ್ಟಿಗಿನ ಕ್ಷಣಗಳು"
+        >
+          Our Moments Together
+        </h2>
+        <p
+          style="
+            text-align: center;
+            font-style: italic;
+            color: var(--bronze);
+            margin-top: 8px;
+          "
+          class="i18n"
+          data-en="Swipe through a few of our favourites"
+          data-kn="ನಮ್ಮ ಕೆಲವು ಮೆಚ್ಚಿನ ಕ್ಷಣಗಳ ಮೂಲಕ ಸ್ವೈಪ್ ಮಾಡಿ"
+        >
+          Swipe through a few of our favourites
+        </p>
+        <div id="gallery">
+          <div class="gallery-slide stack-pos-0" data-index="0">
+            <div class="gallery-photo-inner">
+              <img
+                src="gallery1.jpg"
+                alt="Photo 1"
+                draggable="false"
+                onerror="
+                  this.parentElement.innerHTML =
+                    '&lt;div class=&quot;gallery-ph&quot;&gt;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.4&quot;&gt;&lt;rect x=&quot;3&quot; y=&quot;5&quot; width=&quot;18&quot; height=&quot;14&quot; rx=&quot;2&quot;/&gt;&lt;circle cx=&quot;8.5&quot; cy=&quot;10&quot; r=&quot;1.6&quot;/&gt;&lt;path d=&quot;M21 15l-5-5-9 9&quot;/&gt;&lt;/svg&gt;&lt;span&gt;Photo 1&lt;/span&gt;&lt;/div&gt;'
+                "
+              />
+            </div>
+          </div>
+          <div class="gallery-slide stack-pos-1" data-index="1">
+            <div class="gallery-photo-inner">
+              <img
+                src="gallery2.jpg"
+                alt="Photo 2"
+                draggable="false"
+                onerror="
+                  this.parentElement.innerHTML =
+                    '&lt;div class=&quot;gallery-ph&quot;&gt;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.4&quot;&gt;&lt;rect x=&quot;3&quot; y=&quot;5&quot; width=&quot;18&quot; height=&quot;14&quot; rx=&quot;2&quot;/&gt;&lt;circle cx=&quot;8.5&quot; cy=&quot;10&quot; r=&quot;1.6&quot;/&gt;&lt;path d=&quot;M21 15l-5-5-9 9&quot;/&gt;&lt;/svg&gt;&lt;span&gt;Photo 2&lt;/span&gt;&lt;/div&gt;'
+                "
+              />
+            </div>
+          </div>
+          <div class="gallery-slide stack-pos-2" data-index="2">
+            <div class="gallery-photo-inner">
+              <img
+                src="gallery3.jpg"
+                alt="Photo 3"
+                draggable="false"
+                onerror="
+                  this.parentElement.innerHTML =
+                    '&lt;div class=&quot;gallery-ph&quot;&gt;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.4&quot;&gt;&lt;rect x=&quot;3&quot; y=&quot;5&quot; width=&quot;18&quot; height=&quot;14&quot; rx=&quot;2&quot;/&gt;&lt;circle cx=&quot;8.5&quot; cy=&quot;10&quot; r=&quot;1.6&quot;/&gt;&lt;path d=&quot;M21 15l-5-5-9 9&quot;/&gt;&lt;/svg&gt;&lt;span&gt;Photo 3&lt;/span&gt;&lt;/div&gt;'
+                "
+              />
+            </div>
+          </div>
+          <div class="gallery-slide stack-pos-3" data-index="3">
+            <div class="gallery-photo-inner">
+              <img
+                src="gallery4.jpg"
+                alt="Photo 4"
+                draggable="false"
+                onerror="
+                  this.parentElement.innerHTML =
+                    '&lt;div class=&quot;gallery-ph&quot;&gt;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.4&quot;&gt;&lt;rect x=&quot;3&quot; y=&quot;5&quot; width=&quot;18&quot; height=&quot;14&quot; rx=&quot;2&quot;/&gt;&lt;circle cx=&quot;8.5&quot; cy=&quot;10&quot; r=&quot;1.6&quot;/&gt;&lt;path d=&quot;M21 15l-5-5-9 9&quot;/&gt;&lt;/svg&gt;&lt;span&gt;Photo 4&lt;/span&gt;&lt;/div&gt;'
+                "
+              />
+            </div>
+          </div>
+          <div class="gallery-slide stack-pos-4" data-index="4">
+            <div class="gallery-photo-inner">
+              <img
+                src="gallery5.jpg"
+                alt="Photo 5"
+                draggable="false"
+                onerror="
+                  this.parentElement.innerHTML =
+                    '&lt;div class=&quot;gallery-ph&quot;&gt;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.4&quot;&gt;&lt;rect x=&quot;3&quot; y=&quot;5&quot; width=&quot;18&quot; height=&quot;14&quot; rx=&quot;2&quot;/&gt;&lt;circle cx=&quot;8.5&quot; cy=&quot;10&quot; r=&quot;1.6&quot;/&gt;&lt;path d=&quot;M21 15l-5-5-9 9&quot;/&gt;&lt;/svg&gt;&lt;span&gt;Photo 5&lt;/span&gt;&lt;/div&gt;'
+                "
+              />
+            </div>
+          </div>
+        </div>
+        <div id="gallery-dots"></div>
+        <div
+          id="gallery-hint"
+          class="i18n"
+          data-en="Swipe to see more"
+          data-kn="ಇನ್ನಷ್ಟು ನೋಡಲು ಸ್ವೈಪ್ ಮಾಡಿ"
+        >
+          Swipe to see more
+        </div>
+      </div>
+    </section>
+
+    <!-- Timeline -->
+    <section id="events">
+      <div class="frame reveal" style="text-align: center">
+        <div class="eyebrow">✦ ✦ ✦</div>
+        <h2
+          class="i18n"
+          data-en="Celebration Timeline"
+          data-kn="ಆಚರಣೆಯ ವೇಳಾಪಟ್ಟಿ"
+        >
+          Celebration Timeline
+        </h2>
+      </div>
+      <div class="timeline">
+        <div class="tl-item reveal">
+          <h3
+            class="i18n"
+            data-en="Arishina Ceremony (Haldi)"
+            data-kn="ಅರಿಶಿನ ಶಾಸ್ತ್ರ"
+          >
+            Arishina Ceremony (Haldi)
+          </h3>
+          <div class="when">10 DEC 2026 · 9:00 AM</div>
+          <div
+            class="where i18n"
+            data-en="Residence, Mysuru"
+            data-kn="ನಿವಾಸ, ಮೈಸೂರು"
+          >
+            Residence, Mysuru
+          </div>
+        </div>
+        <div class="tl-item reveal">
+          <h3 class="i18n" data-en="Mehendi" data-kn="ಮೆಹಂದಿ">Mehendi</h3>
+          <div class="when">10 DEC 2026 · 4:00 PM</div>
+          <div
+            class="where i18n"
+            data-en="Residence Lawns, Mysuru"
+            data-kn="ನಿವಾಸದ ಉದ್ಯಾನ, ಮೈಸೂರು"
+          >
+            Residence Lawns, Mysuru
+          </div>
+        </div>
+        <div class="tl-item reveal">
+          <h3 class="i18n" data-en="Sangeetha Sambhrama" data-kn="ಸಂಗೀತ ಸಂಭ್ರಮ">
+            Sangeetha Sambhrama
+          </h3>
+          <div class="when">11 DEC 2026 · 7:00 PM</div>
+          <div
+            class="where i18n"
+            data-en="Lalitha Mahal Palace, Mysuru"
+            data-kn="ಲಲಿತ ಮಹಲ್ ಅರಮನೆ, ಮೈಸೂರು"
+          >
+            Lalitha Mahal Palace, Mysuru
+          </div>
+        </div>
+        <div class="tl-item reveal">
+          <h3
+            class="i18n"
+            data-en="Muhurta — Wedding Ceremony"
+            data-kn="ಮುಹೂರ್ತ — ವಿವಾಹ ಸಮಾರಂಭ"
+          >
+            Muhurta — Wedding Ceremony
+          </h3>
+          <div class="when">12 DEC 2026 · 11:00 AM</div>
+          <div
+            class="where i18n"
+            data-en="Lalitha Mahal Palace, Mysuru"
+            data-kn="ಲಲಿತ ಮಹಲ್ ಅರಮನೆ, ಮೈಸೂರು"
+          >
+            Lalitha Mahal Palace, Mysuru
+          </div>
+        </div>
+        <div class="tl-item reveal">
+          <h3 class="i18n" data-en="Reception" data-kn="ಸತ್ಕಾರ ಕೂಟ">
+            Reception
+          </h3>
+          <div class="when">12 DEC 2026 · 7:00 PM</div>
+          <div
+            class="where i18n"
+            data-en="Lalitha Mahal Palace, Mysuru"
+            data-kn="ಲಲಿತ ಮಹಲ್ ಅರಮನೆ, ಮೈಸೂರು"
+          >
+            Lalitha Mahal Palace, Mysuru
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Venue / Map -->
+    <section id="venue">
+      <div class="frame reveal" id="venue-card">
+        <div class="eyebrow">✦ ✦ ✦</div>
+        <h2 class="i18n" data-en="Join Us At" data-kn="ಇಲ್ಲಿ ಸೇರೋಣ">
+          Join Us At
+        </h2>
+        <h3 style="font-size: 1.8rem; margin-top: 6px">
+          Lalitha Mahal Palace Hotel, Mysuru
+        </h3>
+        <p style="color: var(--bronze); font-style: italic; margin-top: 6px">
+          Lalitha Mahal Road, Siddhartha Nagar, Mysuru, Karnataka 570011
+        </p>
+        <iframe
+          id="map-embed"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps?q=Lalitha+Mahal+Palace+Hotel+Mysuru&output=embed"
+        ></iframe>
+        <a
+          class="btn"
+          href="https://www.google.com/maps/dir/?api=1&destination=Lalitha+Mahal+Palace+Hotel+Mysuru"
+          target="_blank"
+          rel="noopener"
+        >
+          <span class="i18n" data-en="Get Directions" data-kn="ದಾರಿ ತೋರಿಸಿ"
+            >Get Directions</span
+          >
+        </a>
+      </div>
+    </section>
+
+    <footer>
+      <span class="script">Sudeep &amp; Priya</span>
+      <p
+        class="i18n"
+        data-en="With love and gratitude for you being part of our story"
+        data-kn="ನಮ್ಮ ಕಥೆಯ ಭಾಗವಾಗಿರುವ ನಿಮಗೆ ಪ್ರೀತಿ ಮತ್ತು ಕೃತಜ್ಞತೆಯೊಂದಿಗೆ"
+      >
+        With love and gratitude for you being part of our story
+      </p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <script>
+      /* ================= Entrance doors ================= */
+      const doors = document.getElementById("doors");
+      const enterCue = document.getElementById("enter-cue");
+      const enterRing = enterCue.querySelector(".ring");
+      function openDoors() {
+        enterRing.classList.add("tapped");
+        enterCue.classList.add("hide");
+        enterCue.style.transition = "opacity .2s ease";
+        enterCue.style.opacity = "0";
+        enterCue.style.pointerEvents = "none";
+        doors.classList.add("open");
+        setTimeout(() => doors.classList.add("hidden"), 1850);
+        startMusicByDefault();
+      }
+      enterCue.addEventListener("click", openDoors);
+      window.addEventListener(
+        "scroll",
+        () => {
+          if (!doors.classList.contains("open")) openDoors();
+        },
+        { once: true, passive: true },
+      );
+
+      /* ================= Language toggle ================= */
+      let lang = "en";
+      const langToggle = document.getElementById("lang-toggle");
+      const langOpts = document.querySelectorAll(".lang-opt");
+      function setLang(next) {
+        if (next === lang) return;
+        lang = next;
+        langOpts.forEach((opt) =>
+          opt.classList.toggle(
+            "active",
+            opt.getAttribute("data-lang") === lang,
+          ),
+        );
+        document.querySelectorAll(".i18n").forEach((el) => {
+          el.textContent = el.getAttribute("data-" + lang);
+        });
+      }
+      langOpts.forEach((opt) => {
+        opt.addEventListener("click", (e) => {
+          e.stopPropagation();
+          setLang(opt.getAttribute("data-lang"));
+        });
+      });
+      langToggle.addEventListener("click", () =>
+        setLang(lang === "en" ? "kn" : "en"),
+      );
+      langToggle.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          setLang(lang === "en" ? "kn" : "en");
+        }
+      });
+
+      /* ================= Scroll reveal ================= */
+      const revealEls = document.querySelectorAll(".reveal");
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("in");
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.18 },
+      );
+      revealEls.forEach((el) => io.observe(el));
+
+      /* ================= Floating petals ambient canvas ================= */
+      const petalCanvas = document.getElementById("petals");
+      const pctx = petalCanvas.getContext("2d");
+      let W,
+        H,
+        petals = [];
+      function resizeCanvas() {
+        W = petalCanvas.width = window.innerWidth;
+        H = petalCanvas.height = window.innerHeight;
+      }
+      resizeCanvas();
+      window.addEventListener("resize", resizeCanvas);
+      const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+      const petalCount = reduceMotion ? 0 : 10;
+      for (let i = 0; i < petalCount; i++) {
+        petals.push({
+          x: Math.random() * W,
+          y: Math.random() * H,
+          r: 3 + Math.random() * 4,
+          speedY: 0.3 + Math.random() * 0.6,
+          speedX: Math.sin(i) * 0.4,
+          sway: Math.random() * Math.PI * 2,
+          opacity: 0.25 + Math.random() * 0.35,
+        });
+      }
+      function drawPetals() {
+        pctx.clearRect(0, 0, W, H);
+        petals.forEach((p) => {
+          p.sway += 0.01;
+          p.y += p.speedY;
+          p.x += Math.sin(p.sway) * 0.4;
+          if (p.y > H + 10) {
+            p.y = -10;
+            p.x = Math.random() * W;
+          }
+          pctx.beginPath();
+          pctx.fillStyle = `rgba(198,150,60,${p.opacity})`;
+          pctx.ellipse(p.x, p.y, p.r, p.r * 0.6, p.sway, 0, Math.PI * 2);
+          pctx.fill();
+        });
+        requestAnimationFrame(drawPetals);
+      }
+      if (!reduceMotion) drawPetals();
+
+      /* ================= Scratch to reveal (smooth, pointer-based) ================= */
+      const scratchCard = document.getElementById("scratch-card");
+      const scratchCanvas = document.getElementById("scratch-canvas");
+      const sctx = scratchCanvas.getContext("2d", { willReadFrequently: true });
+      let dpr = Math.max(1, window.devicePixelRatio || 1);
+      let cssW = 0,
+        cssH = 0;
+
+      function paintScratchLayer() {
+        const grad = sctx.createLinearGradient(0, 0, cssW, cssH);
+        grad.addColorStop(0, "#E9CD8B");
+        grad.addColorStop(0.5, "#D4A94F");
+        grad.addColorStop(1, "#E9CD8B");
+        sctx.fillStyle = grad;
+        sctx.fillRect(0, 0, cssW, cssH);
+      }
+
+      function initScratch() {
+        const rect = scratchCard.getBoundingClientRect();
+        cssW = rect.width;
+        cssH = rect.height;
+        dpr = Math.max(1, window.devicePixelRatio || 1);
+        scratchCanvas.width = cssW * dpr;
+        scratchCanvas.height = cssH * dpr;
+        scratchCanvas.style.width = cssW + "px";
+        scratchCanvas.style.height = cssH + "px";
+        sctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        sctx.lineCap = "round";
+        sctx.lineJoin = "round";
+        paintScratchLayer();
+      }
+      window.addEventListener("load", initScratch);
+      window.addEventListener("resize", initScratch);
+
+      let scratching = false;
+      let revealed = false;
+      let lastPt = null;
+      let moveCount = 0;
+      const BRUSH = 46;
+
+      function getPos(e) {
+        const rect = scratchCanvas.getBoundingClientRect();
+        return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+      }
+
+      function strokeTo(from, to) {
+        sctx.globalCompositeOperation = "destination-out";
+        sctx.lineWidth = BRUSH;
+        sctx.beginPath();
+        sctx.moveTo(from.x, from.y);
+        sctx.lineTo(to.x, to.y);
+        sctx.stroke();
+        sctx.beginPath();
+        sctx.arc(to.x, to.y, BRUSH / 2, 0, Math.PI * 2);
+        sctx.fill();
+      }
+
+      function measureErasedPercent() {
+        const sw = 48,
+          sh = Math.max(1, Math.round(sw * (cssH / cssW)));
+        const off = document.createElement("canvas");
+        off.width = sw;
+        off.height = sh;
+        const octx = off.getContext("2d");
+        octx.drawImage(scratchCanvas, 0, 0, sw, sh);
+        const data = octx.getImageData(0, 0, sw, sh).data;
+        let cleared = 0;
+        for (let i = 3; i < data.length; i += 4) {
+          if (data[i] < 80) cleared++;
+        }
+        return cleared / (sw * sh);
+      }
+
+      // festive confetti palette — warm golds/maroons from the theme plus
+      // a few bright accent colours so the blast actually reads as colourful
+      const CONFETTI_COLORS = [
+        "#c6963c", // gold
+        "#e9cd8b", // gold light
+        "#6b1029", // maroon
+        "#ffffff", // ivory/white
+        "#e0574f", // coral red
+        "#2e8b7c", // teal
+        "#e6a23c", // amber
+        "#c04fae", // magenta pink
+        "#4f8fe6", // sky blue
+      ];
+
+      function spawnBurst() {
+        const layer = document.getElementById("burst-layer");
+
+        // central flash
+        const flash = document.createElement("div");
+        flash.className = "burst-flash";
+        layer.appendChild(flash);
+
+        // 2-3 expanding shockwave rings in different colours, staggered
+        const ringCount = 3;
+        for (let r = 0; r < ringCount; r++) {
+          const ring = document.createElement("div");
+          ring.className = "burst-ring";
+          ring.style.setProperty(
+            "--ring-color",
+            CONFETTI_COLORS[r % CONFETTI_COLORS.length],
+          );
+          ring.style.animationDelay = r * 0.09 + "s";
+          layer.appendChild(ring);
+        }
+
+        // confetti burst: mixed shapes, sizes and colours flying outward while spinning
+        const count = 34;
+        for (let i = 0; i < count; i++) {
+          const dot = document.createElement("div");
+          dot.className = "burst-dot";
+          const angle =
+            ((Math.PI * 2) / count) * i + (Math.random() * 0.5 - 0.25);
+          const dist = 80 + Math.random() * 130;
+          const size = 5 + Math.random() * 6;
+          const isSquare = Math.random() > 0.5;
+          const color =
+            CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)];
+          const rot = (Math.random() > 0.5 ? 1 : -1) * (280 + Math.random() * 360);
+
+          dot.style.setProperty("--bx", Math.cos(angle) * dist + "px");
+          dot.style.setProperty("--by", Math.sin(angle) * dist + "px");
+          dot.style.setProperty("--bsize", size + "px");
+          dot.style.setProperty("--bshape", isSquare ? "2px" : "50%");
+          dot.style.setProperty("--bcolor", color);
+          dot.style.setProperty("--brot", rot + "deg");
+          dot.style.animationDelay = Math.random() * 0.12 + "s";
+          layer.appendChild(dot);
+        }
+
+        setTimeout(() => {
+          layer.innerHTML = "";
+        }, 1500);
+      }
+
+      function finishReveal() {
+        if (revealed) return;
+        revealed = true;
+        scratchCard.classList.add("revealed");
+        scratchCanvas.style.transition = "opacity .8s ease";
+        scratchCanvas.style.opacity = "0";
+        spawnBurst();
+      }
+
+      function handleMove(pos) {
+        if (!lastPt) lastPt = pos;
+        strokeTo(lastPt, pos);
+        lastPt = pos;
+        moveCount++;
+        if (moveCount % 4 === 0 && !revealed) {
+          if (measureErasedPercent() > 0.3) finishReveal();
+        }
+      }
+
+      scratchCanvas.addEventListener("pointerdown", (e) => {
+        if (revealed) return;
+        scratching = true;
+        scratchCard.classList.add("scratching");
+        lastPt = getPos(e);
+        strokeTo(lastPt, lastPt);
+        scratchCanvas.setPointerCapture(e.pointerId);
+        scratchCanvas.style.cursor = "grabbing";
+      });
+      scratchCanvas.addEventListener("pointermove", (e) => {
+        if (!scratching || revealed) return;
+        handleMove(getPos(e));
+      });
+      function endScratch() {
+        scratching = false;
+        lastPt = null;
+        scratchCanvas.style.cursor = "grab";
+      }
+      scratchCanvas.addEventListener("pointerup", endScratch);
+      scratchCanvas.addEventListener("pointercancel", endScratch);
+      scratchCanvas.addEventListener("pointerleave", endScratch);
+
+      /* ================= Photo gallery: stacked photo-pile carousel ================= */
+      const gallery = document.getElementById("gallery");
+      const gallerySlides = Array.from(
+        gallery.querySelectorAll(".gallery-slide"),
+      );
+      const galCount = gallerySlides.length;
+      const dotsWrap = document.getElementById("gallery-dots");
+      let galIndex = 0;
+      let galTimer = null;
+
+      gallerySlides.forEach((_, i) => {
+        const dot = document.createElement("div");
+        dot.className = "gallery-dot" + (i === 0 ? " active" : "");
+        dot.addEventListener("click", () => goToSlide(i));
+        dotsWrap.appendChild(dot);
+      });
+      const galDots = Array.from(dotsWrap.querySelectorAll(".gallery-dot"));
+
+      function layoutStack() {
+        gallerySlides.forEach((slide, i) => {
+          const rel = (i - galIndex + galCount) % galCount;
+          const pos = Math.min(rel, 4);
+          slide.className = "gallery-slide stack-pos-" + pos;
+        });
+        galDots.forEach((d, idx) =>
+          d.classList.toggle("active", idx === galIndex),
+        );
+      }
+
+      function goToSlide(i) {
+        galIndex = (i + galCount) % galCount;
+        layoutStack();
+        resetGalTimer();
+      }
+      function galNext() {
+        goToSlide(galIndex + 1);
+      }
+      function galPrev() {
+        goToSlide(galIndex - 1);
+      }
+
+      function resetGalTimer() {
+        if (galTimer) clearInterval(galTimer);
+        galTimer = setInterval(galNext, 5000);
+      }
+      resetGalTimer();
+
+      // drag the front card directly, like flicking the top photo off a pile
+      let galStartX = null,
+        galStartY = null,
+        galDeltaX = 0,
+        galDragging = false,
+        galFrontEl = null,
+        galPointerId = null;
+
+      const GAL_SWIPE_THRESHOLD = 65;
+      const GAL_DRAG_LOCK = 8; // px of horizontal movement before we commit to a horizontal drag
+
+      gallery.addEventListener("pointerdown", (e) => {
+        if (e.pointerType === "mouse" && e.button !== 0) return;
+        galFrontEl = gallery.querySelector(".stack-pos-0");
+        if (!galFrontEl) return;
+        galDragging = true;
+        galStartX = e.clientX;
+        galStartY = e.clientY;
+        galDeltaX = 0;
+        galPointerId = e.pointerId;
+        if (galTimer) clearInterval(galTimer);
+        // don't capture/preventDefault yet — wait to see if this is a
+        // horizontal swipe or a vertical page-scroll, so we never fight
+        // the browser's native scrolling on touch devices
+      });
+      gallery.addEventListener("pointermove", (e) => {
+        if (!galDragging || !galFrontEl || e.pointerId !== galPointerId)
+          return;
+        const dx = e.clientX - galStartX;
+        const dy = e.clientY - galStartY;
+
+        if (!galFrontEl.classList.contains("dragging")) {
+          // haven't committed to a direction yet
+          if (Math.abs(dx) < GAL_DRAG_LOCK && Math.abs(dy) < GAL_DRAG_LOCK) {
+            return;
+          }
+          if (Math.abs(dy) > Math.abs(dx)) {
+            // this is a vertical scroll gesture — bail out and let the page scroll
+            galDragging = false;
+            galFrontEl = null;
+            resetGalTimer();
+            return;
+          }
+          // committed to a horizontal swipe: take over from here
+          galFrontEl.classList.add("dragging");
+          try {
+            gallery.setPointerCapture(e.pointerId);
+          } catch (err) {}
+        }
+
+        e.preventDefault();
+        galDeltaX = dx;
+        const rotate = -2.5 + galDeltaX * 0.06;
+        galFrontEl.style.transform = `translate(calc(-50% + ${galDeltaX}px), 0) rotate(${rotate}deg)`;
+        galFrontEl.style.opacity = String(
+          1 - Math.min(Math.abs(galDeltaX) / 260, 0.5),
+        );
+      });
+      function galEndDrag(e) {
+        if (!galDragging || !galFrontEl) {
+          galDragging = false;
+          galFrontEl = null;
+          resetGalTimer();
+          return;
+        }
+        galDragging = false;
+        galFrontEl.classList.remove("dragging");
+        galFrontEl.style.transform = "";
+        galFrontEl.style.opacity = "";
+        if (galDeltaX < -GAL_SWIPE_THRESHOLD) galNext();
+        else if (galDeltaX > GAL_SWIPE_THRESHOLD) galPrev();
+        else resetGalTimer();
+        galFrontEl = null;
+        galPointerId = null;
+      }
+      gallery.addEventListener("pointerup", galEndDrag);
+      gallery.addEventListener("pointercancel", galEndDrag);
+      gallery.addEventListener("dragstart", (e) => e.preventDefault());
+      gallery.addEventListener("mouseenter", () => {
+        if (galTimer) clearInterval(galTimer);
+      });
+      gallery.addEventListener("mouseleave", () => {
+        if (!galDragging) resetGalTimer();
+      });
+
+      /* ================= Countdown ================= */
+      const weddingDate = new Date("2026-12-12T11:00:00+05:30").getTime();
+      function updateCountdown() {
+        const now = Date.now();
+        let diff = Math.max(0, weddingDate - now);
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const mins = Math.floor((diff / (1000 * 60)) % 60);
+        const secs = Math.floor((diff / 1000) % 60);
+        document.getElementById("cd-days").textContent = String(days).padStart(
+          2,
+          "0",
+        );
+        document.getElementById("cd-hours").textContent = String(
+          hours,
+        ).padStart(2, "0");
+        document.getElementById("cd-mins").textContent = String(mins).padStart(
+          2,
+          "0",
+        );
+        document.getElementById("cd-secs").textContent = String(secs).padStart(
+          2,
+          "0",
+        );
+      }
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+
+      /* ================= Background music: real file first, generated Nadaswaram-style fallback ================= */
+      let musicOn = true;
+      let musicStarted = false;
+      let usingRealAudio = false;
+      const bgAudio = document.getElementById("bg-music");
+      const musicBtn = document.getElementById("music-btn");
+      const iconOn = document.getElementById("music-icon-on");
+      const iconOff = document.getElementById("music-icon-off");
+
+      let drone, nadaswaram, tabla, patternLoop;
+
+      const ragaScale = ["C4", "D4", "E4", "G4", "A4", "C5", "D5", "E5"];
+      const ragaPhrase = [
+        "C4",
+        "D4",
+        "E4",
+        "G4",
+        "E4",
+        "D4",
+        "C4",
+        "G3",
+        "A3",
+        "C4",
+        "D4",
+        "E4",
+        "G4",
+        "A4",
+        "G4",
+        "E4",
+      ];
+
+      function buildGeneratedMusic() {
+        const reverb = new Tone.Reverb({ decay: 7, wet: 0.5 }).toDestination();
+
+        drone = new Tone.PolySynth(Tone.Synth, {
+          oscillator: { type: "sine" },
+          envelope: { attack: 3, decay: 1, sustain: 0.9, release: 5 },
+        }).connect(reverb);
+        drone.volume.value = -20;
+
+        const reedFilter = new Tone.Filter({
+          frequency: 1200,
+          type: "bandpass",
+          Q: 1.4,
+        }).connect(reverb);
+        const vibrato = new Tone.Vibrato({
+          frequency: 5.5,
+          depth: 0.15,
+        }).connect(reedFilter);
+        nadaswaram = new Tone.Synth({
+          oscillator: { type: "sawtooth" },
+          envelope: { attack: 0.08, decay: 0.25, sustain: 0.7, release: 0.6 },
+          portamento: 0.06,
+        }).connect(vibrato);
+        nadaswaram.volume.value = -14;
+
+        tabla = new Tone.MembraneSynth({
+          pitchDecay: 0.04,
+          octaves: 3,
+          envelope: { attack: 0.001, decay: 0.35, sustain: 0.01, release: 0.3 },
+        }).connect(reverb);
+        tabla.volume.value = -16;
+
+        let phraseIdx = 0;
+        let beat = 0;
+        patternLoop = new Tone.Loop((time) => {
+          if (beat % 8 === 0) {
+            drone.triggerAttackRelease(["C3", "G3"], "2m", time);
+          }
+          if (beat % 2 === 0 && Math.random() > 0.15) {
+            nadaswaram.triggerAttackRelease(
+              ragaPhrase[phraseIdx % ragaPhrase.length],
+              "8n",
+              time,
+            );
+            phraseIdx++;
+          }
+          if (beat % 4 === 2) {
+            tabla.triggerAttackRelease("C2", "8n", time);
+          }
+          beat++;
+        }, "8n");
+
+        Tone.Transport.bpm.value = 76;
+        patternLoop.start(0);
+        Tone.Transport.start();
+        Tone.Destination.volume.value = -6;
+      }
+
+      async function setupMusic() {
+        if (musicStarted) return;
+        musicStarted = true;
+
+        try {
+          await bgAudio.play();
+          usingRealAudio = true;
+          bgAudio.volume = 0.5;
+          bgAudio.muted = !musicOn;
+          return;
+        } catch (err) {
+          usingRealAudio = false;
+        }
+
+        await Tone.start();
+        buildGeneratedMusic();
+        Tone.Destination.mute = !musicOn;
+      }
+
+      async function startMusicByDefault() {
+        if (musicOn) await setupMusic();
+      }
+
+      musicBtn.addEventListener("click", async (e) => {
+        e.stopPropagation();
+        await setupMusic();
+        musicOn = !musicOn;
+        if (usingRealAudio) {
+          bgAudio.muted = !musicOn;
+        } else {
+          Tone.Destination.mute = !musicOn;
+        }
+        iconOn.style.display = musicOn ? "block" : "none";
+        iconOff.style.display = musicOn ? "none" : "block";
+      });
+    </script>
+  </body>
+</html>
