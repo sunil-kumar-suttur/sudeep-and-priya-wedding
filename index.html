@@ -270,6 +270,7 @@
         top: 16px;
         left: 16px;
         z-index: 500;
+        display: none;
       }
       #controls {
         position: fixed;
@@ -315,7 +316,7 @@
         height: 30px;
         box-shadow: var(--shadow);
         cursor: pointer;
-        display:none;
+        display: none;
       }
       .lang-opt {
         padding: 0 12px;
@@ -1130,7 +1131,7 @@
   </head>
   <body>
     <canvas id="petals"></canvas>
-    <audio id="bg-music" loop preload="auto" src="wedding-music.mp3"></audio>
+    <!-- <audio id="bg-music" loop preload="auto" src="wedding-music.mp3"></audio> -->
 
     <!-- Entrance: invitation opening in four pieces -->
     <div id="doors">
@@ -1478,19 +1479,6 @@
                 onerror="
                   this.parentElement.innerHTML =
                     '&lt;div class=&quot;gallery-ph&quot;&gt;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.4&quot;&gt;&lt;rect x=&quot;3&quot; y=&quot;5&quot; width=&quot;18&quot; height=&quot;14&quot; rx=&quot;2&quot;/&gt;&lt;circle cx=&quot;8.5&quot; cy=&quot;10&quot; r=&quot;1.6&quot;/&gt;&lt;path d=&quot;M21 15l-5-5-9 9&quot;/&gt;&lt;/svg&gt;&lt;span&gt;Photo 4&lt;/span&gt;&lt;/div&gt;'
-                "
-              />
-            </div>
-          </div>
-          <div class="gallery-slide stack-pos-4" data-index="4">
-            <div class="gallery-photo-inner">
-              <img
-                src="gallery5.jpg"
-                alt="Photo 5"
-                draggable="false"
-                onerror="
-                  this.parentElement.innerHTML =
-                    '&lt;div class=&quot;gallery-ph&quot;&gt;&lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.4&quot;&gt;&lt;rect x=&quot;3&quot; y=&quot;5&quot; width=&quot;18&quot; height=&quot;14&quot; rx=&quot;2&quot;/&gt;&lt;circle cx=&quot;8.5&quot; cy=&quot;10&quot; r=&quot;1.6&quot;/&gt;&lt;path d=&quot;M21 15l-5-5-9 9&quot;/&gt;&lt;/svg&gt;&lt;span&gt;Photo 5&lt;/span&gt;&lt;/div&gt;'
                 "
               />
             </div>
@@ -1877,7 +1865,8 @@
           const isSquare = Math.random() > 0.5;
           const color =
             CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)];
-          const rot = (Math.random() > 0.5 ? 1 : -1) * (280 + Math.random() * 360);
+          const rot =
+            (Math.random() > 0.5 ? 1 : -1) * (280 + Math.random() * 360);
 
           dot.style.setProperty("--bx", Math.cos(angle) * dist + "px");
           dot.style.setProperty("--by", Math.sin(angle) * dist + "px");
@@ -2008,8 +1997,7 @@
         // the browser's native scrolling on touch devices
       });
       gallery.addEventListener("pointermove", (e) => {
-        if (!galDragging || !galFrontEl || e.pointerId !== galPointerId)
-          return;
+        if (!galDragging || !galFrontEl || e.pointerId !== galPointerId) return;
         const dx = e.clientX - galStartX;
         const dy = e.clientY - galStartY;
 
@@ -2096,7 +2084,7 @@
       setInterval(updateCountdown, 1000);
 
       /* ================= Background music: real file first, generated Nadaswaram-style fallback ================= */
-      let musicOn = true;
+      let musicOn = false;
       let musicStarted = false;
       let usingRealAudio = false;
       const bgAudio = document.getElementById("bg-music");
