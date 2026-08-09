@@ -69,199 +69,260 @@
         z-index: 2;
       }
 
-      /* ---------- entrance: invitation opening in four pieces ---------- */
+      /* ================= entrance: the invitation card physically opens ================= */
       #doors {
         position: fixed;
         inset: 0;
         z-index: 9999;
-      }
-      #doors::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background:
-          linear-gradient(var(--gold-light) 0 0) center/2px 100% no-repeat,
-          linear-gradient(90deg, var(--gold-light) 0 0) center/100% 2px
-            no-repeat;
-        opacity: 0.35;
-        z-index: 0;
-        transition: opacity 0.5s ease;
-      }
-      /* fade the fold-line seam out together with the panels, instead of
-         leaving it visible until #doors gets visibility:hidden */
-      #doors.open::before {
-        opacity: 0;
-        transition-delay: 0.5s;
-      }
-      .panel {
-        position: absolute;
-        width: 50%;
-        height: 50%;
         background: radial-gradient(
-          circle at 50% 50%,
-          var(--maroon) 0%,
+          circle at 50% 38%,
+          #5a1a34 0%,
           var(--maroon-deep) 75%
         );
-        box-shadow: inset 0 0 90px rgba(0, 0, 0, 0.45);
-        transition:
-          transform 1.5s cubic-bezier(0.76, 0, 0.24, 1),
-          opacity 1.5s ease;
-        z-index: 1;
-      }
-      .panel::before {
-        content: "";
-        position: absolute;
-        border: 1.5px solid var(--gold);
-        opacity: 0.7;
-      }
-      .panel.tl {
-        top: 0;
-        left: 0;
-        transform-origin: top left;
-      }
-      .panel.tr {
-        top: 0;
-        right: 0;
-        transform-origin: top right;
-      }
-      .panel.bl {
-        bottom: 0;
-        left: 0;
-        transform-origin: bottom left;
-      }
-      .panel.br {
-        bottom: 0;
-        right: 0;
-        transform-origin: bottom right;
-      }
-      .panel.tl::before {
-        top: 16px;
-        left: 16px;
-        right: 6px;
-        bottom: 6px;
-        border-right: none;
-        border-bottom: none;
-      }
-      .panel.tr::before {
-        top: 16px;
-        right: 16px;
-        left: 6px;
-        bottom: 6px;
-        border-left: none;
-        border-bottom: none;
-      }
-      .panel.bl::before {
-        bottom: 16px;
-        left: 16px;
-        right: 6px;
-        top: 6px;
-        border-right: none;
-        border-top: none;
-      }
-      .panel.br::before {
-        bottom: 16px;
-        right: 16px;
-        left: 6px;
-        top: 6px;
-        border-left: none;
-        border-top: none;
-      }
-
-      .panel.tl::after {
-        top: 26px;
-        left: 26px;
-      }
-      .panel.tr::after {
-        top: 26px;
-        right: 26px;
-      }
-      .panel.bl::after {
-        bottom: 26px;
-        left: 26px;
-      }
-      .panel.br::after {
-        bottom: 26px;
-        right: 26px;
-      }
-
-      #doors.open .panel.tl {
-        transform: translate(-46%, -46%) rotate(-14deg) scale(0.94);
-        opacity: 0;
-        transition-delay: 0s;
-      }
-      #doors.open .panel.tr {
-        transform: translate(46%, -46%) rotate(14deg) scale(0.94);
-        opacity: 0;
-        transition-delay: 0.08s;
-      }
-      #doors.open .panel.bl {
-        transform: translate(-46%, 46%) rotate(14deg) scale(0.94);
-        opacity: 0;
-        transition-delay: 0.16s;
-      }
-      #doors.open .panel.br {
-        transform: translate(46%, 46%) rotate(-14deg) scale(0.94);
-        opacity: 0;
-        transition-delay: 0.24s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
       }
       #doors.hidden {
         visibility: hidden;
       }
-      #enter-cue {
+      .invite-glow {
         position: absolute;
         top: 50%;
         left: 50%;
+        width: 560px;
+        height: 560px;
+        border-radius: 50%;
         transform: translate(-50%, -50%);
-        color: var(--gold-light);
-        font-family: "Cinzel", serif;
-        letter-spacing: 0.3em;
-        font-size: 0.75rem;
-        text-align: center;
-        z-index: 2;
-        cursor: pointer;
+        background: radial-gradient(
+          circle,
+          rgba(233, 205, 139, 0.2) 0%,
+          transparent 70%
+        );
+        animation: inviteGlowPulse 4s ease-in-out infinite;
+      }
+      @keyframes inviteGlowPulse {
+        0%,
+        100% {
+          opacity: 0.55;
+          transform: translate(-50%, -50%) scale(0.92);
+        }
+        50% {
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(1.05);
+        }
+      }
+      .card-scene {
+        position: relative;
+        z-index: 1;
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 14px;
-        opacity: 1;
-        transition: opacity 0.5s ease;
+        gap: 30px;
+        perspective: 1800px;
       }
-      #doors.open #enter-cue {
-        opacity: 0;
-        transition-delay: 0.9s;
+      .invite-card {
+        position: relative;
+        width: min(360px, 82vw);
+        aspect-ratio: 3 / 4;
       }
-      #enter-cue.hide {
-        opacity: 0 !important;
-        transition: opacity 0.2s ease !important;
-        transition-delay: 0s !important;
-        pointer-events: none;
-      }
-      #enter-cue .ring {
-        width: 64px;
-        height: 64px;
-        border: 1px solid var(--gold);
-        border-radius: 50%;
+      .card-half {
+        position: absolute;
+        top: 0;
+        width: 50%;
+        height: 100%;
+        background: radial-gradient(
+          circle at 50% 40%,
+          var(--maroon) 0%,
+          var(--maroon-deep) 80%
+        );
+        box-shadow: var(--shadow);
+        transition:
+          transform 1.9s cubic-bezier(0.45, 0.05, 0.15, 1),
+          opacity 1.6s ease;
         display: flex;
         align-items: center;
         justify-content: center;
-        animation: pulseRing 2.6s ease-in-out infinite;
-        font-family: "Cinzel", serif;
-        font-size: 0.62rem;
-        letter-spacing: 0.16em;
+        backface-visibility: hidden;
+      }
+      .half-left {
+        left: 0;
+        border-radius: 10px 0 0 10px;
+        transform-origin: right center;
+      }
+      .half-right {
+        right: 0;
+        border-radius: 0 10px 10px 0;
+        transform-origin: left center;
+      }
+      .half-border {
+        position: absolute;
+        inset: 14px;
+        border: 1px solid var(--gold);
+        opacity: 0.55;
+        transition: opacity 1.3s ease;
+      }
+      .half-left .half-border {
+        border-right: none;
+      }
+      .half-right .half-border {
+        border-left: none;
+      }
+      .half-mono {
+        font-size: 3.4rem;
         color: var(--gold-light);
+        opacity: 0.85;
+        transition: opacity 0.9s ease;
       }
-      #enter-cue .ring.tapped {
-        animation: none;
-        box-shadow: none;
+      #doors.opening .card-half.half-left {
+        transform: rotateY(-112deg);
+        opacity: 0.22;
+        transition-delay: 0.3s;
       }
-      @keyframes pulseRing {
-        0%,
+      #doors.opening .card-half.half-right {
+        transform: rotateY(112deg);
+        opacity: 0.22;
+        transition-delay: 0.3s;
+      }
+      #doors.opening .half-mono,
+      #doors.opening .half-border {
+        opacity: 0;
+      }
+
+      .ribbon-wrap {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        height: 30px;
+        transform: translateY(-50%);
+        z-index: 6;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .ribbon {
+        position: absolute;
+        top: 50%;
+        width: 50%;
+        height: 12px;
+        transform: translateY(-50%);
+        background: linear-gradient(90deg, var(--gold), var(--gold-light));
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+        transition:
+          transform 1.1s cubic-bezier(0.4, 0, 0.2, 1),
+          opacity 0.9s ease;
+      }
+      .ribbon-l {
+        left: 0;
+        transform-origin: left center;
+      }
+      .ribbon-r {
+        right: 0;
+        transform-origin: right center;
+      }
+      #doors.opening .ribbon-l {
+        transform: translateY(-50%) scaleX(0) translateX(-10px);
+        opacity: 0;
+      }
+      #doors.opening .ribbon-r {
+        transform: translateY(-50%) scaleX(0) translateX(10px);
+        opacity: 0;
+      }
+
+      .wax-seal {
+        position: relative;
+        z-index: 7;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle at 35% 30%,
+          #e0713f,
+          var(--maroon-deep) 72%
+        );
+        border: none;
+        cursor: pointer;
+        box-shadow:
+          0 4px 10px rgba(0, 0, 0, 0.4),
+          inset 0 2px 4px rgba(255, 255, 255, 0.25);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition:
+          transform 0.8s cubic-bezier(0.34, 1.2, 0.4, 1),
+          opacity 0.7s ease 0.05s;
+        padding: 0;
+      }
+      .wax-inner {
+        color: var(--gold-light);
+        font-size: 1.1rem;
+        pointer-events: none;
+      }
+      #doors.opening .wax-seal {
+        transform: scale(0.6);
+        opacity: 0;
+      }
+      .seal-burst {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        z-index: 8;
+        pointer-events: none;
+      }
+      .seal-spark {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: var(--gold-light);
+        opacity: 0;
+      }
+      #doors.opening .seal-spark {
+        animation: sealSpark 1.1s ease-out forwards;
+      }
+      @keyframes sealSpark {
+        0% {
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(1);
+        }
         100% {
-          box-shadow: 0 0 0 0 rgba(198, 150, 60, 0.4);
+          opacity: 0;
+          transform: translate(calc(-50% + var(--sx)), calc(-50% + var(--sy)))
+            scale(0.2);
         }
-        50% {
-          box-shadow: 0 0 0 14px rgba(198, 150, 60, 0);
-        }
+      }
+
+      #enter-cue {
+        font-family: "Cinzel", serif;
+        letter-spacing: 0.26em;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        color: var(--gold-light);
+        text-align: center;
+        opacity: 0.9;
+        transition: opacity 0.6s ease;
+        cursor: pointer;
+      }
+      #doors.opening #enter-cue {
+        opacity: 0;
+        pointer-events: none;
+      }
+      #doors.fade-out .card-scene,
+      #doors.fade-out .invite-glow {
+        opacity: 0;
+        transform: scale(0.94);
+        transition:
+          opacity 1s ease,
+          transform 1s ease;
+      }
+      #doors.fade-out .invite-glow {
+        transform: translate(-50%, -50%) scale(0.8);
       }
 
       /* ---------- top controls ---------- */
@@ -683,7 +744,7 @@
       }
 
       #scratch-card.revealed {
-        animation: cardGlow 1.6s ease-out;
+        animation: cardGlow 2s ease-out;
       }
       @keyframes cardGlow {
         0% {
@@ -694,7 +755,7 @@
         35% {
           box-shadow:
             var(--shadow),
-            0 0 40px 6px rgba(198, 150, 60, 0.55);
+            0 0 46px 8px rgba(198, 150, 60, 0.45);
         }
         100% {
           box-shadow:
@@ -711,7 +772,7 @@
         overflow: visible;
       }
 
-      /* central flash + expanding shockwave rings behind the confetti */
+      /* central soft flash */
       .burst-flash {
         position: absolute;
         left: 50%;
@@ -722,26 +783,27 @@
         background: radial-gradient(
           circle,
           #fff 0%,
-          var(--gold-light) 40%,
+          var(--gold-light) 45%,
           transparent 72%
         );
         transform: translate(-50%, -50%) scale(0);
         opacity: 0;
       }
       #scratch-card.revealed .burst-flash {
-        animation: burstFlash 0.6s ease-out forwards;
+        animation: burstFlash 1.1s ease-out forwards;
       }
       @keyframes burstFlash {
         0% {
-          opacity: 0.95;
+          opacity: 0.9;
           transform: translate(-50%, -50%) scale(0.2);
         }
         100% {
           opacity: 0;
-          transform: translate(-50%, -50%) scale(7);
+          transform: translate(-50%, -50%) scale(6.5);
         }
       }
 
+      /* a single, refined expanding ring */
       .burst-ring {
         position: absolute;
         left: 50%;
@@ -749,16 +811,16 @@
         width: 20px;
         height: 20px;
         border-radius: 50%;
-        border: 2px solid var(--ring-color, var(--gold-light));
+        border: 1px solid var(--gold-light);
         transform: translate(-50%, -50%) scale(0);
         opacity: 0;
       }
       #scratch-card.revealed .burst-ring {
-        animation: burstRing 0.9s cubic-bezier(0.15, 0.7, 0.3, 1) forwards;
+        animation: burstRing 1.5s cubic-bezier(0.15, 0.7, 0.3, 1) forwards;
       }
       @keyframes burstRing {
         0% {
-          opacity: 0.9;
+          opacity: 0.7;
           transform: translate(-50%, -50%) scale(0.3);
         }
         100% {
@@ -767,33 +829,37 @@
         }
       }
 
-      /* confetti pieces: mixed circles/squares in festive colors, spinning as they fly */
+      /* gentle golden sparkle particles that drift upward and fade,
+         like light catching gold dust — refined, not confetti */
       .burst-dot {
         position: absolute;
         left: 50%;
         top: 50%;
-        width: var(--bsize, 7px);
-        height: var(--bsize, 7px);
-        border-radius: var(--bshape, 50%);
-        background: var(--bcolor, var(--gold-light));
+        width: var(--bsize, 5px);
+        height: var(--bsize, 5px);
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          #fff 0%,
+          var(--bcolor, var(--gold-light)) 65%
+        );
         opacity: 0;
-        box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.08);
       }
       #scratch-card.revealed .burst-dot {
-        animation: burstOut 1.15s cubic-bezier(0.15, 0.65, 0.25, 1) forwards;
+        animation: burstDrift 1.9s cubic-bezier(0.2, 0.7, 0.3, 1) forwards;
       }
-      @keyframes burstOut {
+      @keyframes burstDrift {
         0% {
-          opacity: 1;
-          transform: translate(-50%, -50%) scale(1) rotate(0deg);
+          opacity: 0;
+          transform: translate(-50%, -50%) scale(0.4);
         }
-        65% {
+        16% {
           opacity: 1;
         }
         100% {
           opacity: 0;
           transform: translate(calc(-50% + var(--bx)), calc(-50% + var(--by)))
-            scale(0.3) rotate(var(--brot, 360deg));
+            scale(0.9);
         }
       }
 
@@ -803,9 +869,9 @@
       }
       #gallery {
         position: relative;
-        width: min(380px, 82vw);
+        width: min(560px, 94vw);
         aspect-ratio: 4/5;
-        margin: 50px auto 0;
+        margin: 40px auto 0;
         overflow: visible;
         touch-action: pan-y;
       }
@@ -1066,7 +1132,7 @@
         }
         .tl-item::before,
         .tl-item:nth-child(even)::before {
-          left: 8px;
+          left: 5px;
         }
       }
 
@@ -1133,15 +1199,40 @@
     <canvas id="petals"></canvas>
     <!-- <audio id="bg-music" loop preload="auto" src="wedding-music.mp3"></audio> -->
 
-    <!-- Entrance: invitation opening in four pieces -->
+    <!-- Entrance: the invitation card physically opens -->
     <div id="doors">
-      <div class="panel tl"></div>
-      <div class="panel tr"></div>
-      <div class="panel bl"></div>
-      <div class="panel br"></div>
-      <div id="enter-cue">
-        <div class="ring">Tap</div>
-        <div>Tap to Open<br />Our Invitation</div>
+      <div class="invite-glow"></div>
+      <div class="card-scene">
+        <div class="invite-card">
+          <div class="card-half half-left">
+            <div class="half-border"></div>
+            <div class="half-mono script">S</div>
+          </div>
+          <div class="card-half half-right">
+            <div class="half-border"></div>
+            <div class="half-mono script">P</div>
+          </div>
+          <div class="ribbon-wrap">
+            <div class="ribbon ribbon-l"></div>
+            <div class="ribbon ribbon-r"></div>
+            <button
+              class="wax-seal"
+              id="wax-seal"
+              aria-label="Break the seal to open the invitation"
+            >
+              <span class="wax-inner script">S&amp;P</span>
+            </button>
+            <div class="seal-burst" id="seal-burst"></div>
+          </div>
+        </div>
+        <div
+          id="enter-cue"
+          class="i18n"
+          data-en="Tap the seal to open"
+          data-kn="ಮುದ್ರೆ ಒತ್ತಿ ತೆರೆಯಿರಿ"
+        >
+          Tap the seal to open
+        </div>
       </div>
     </div>
 
@@ -1339,7 +1430,7 @@
             data-en="✦ swipe to scratch ✦"
             data-kn="✦ ಉಜ್ಜಲು ಸ್ವೈಪ್ ಮಾಡಿ ✦"
           >
-            ✦ swipe to scratch ✦
+            ✦ Scratch the card ✦
           </div>
           <div id="scratch-shimmer"></div>
           <div id="burst-layer"></div>
@@ -1430,7 +1521,7 @@
         >
           Swipe through a few of our favourites
         </p>
-        <div id="gallery">
+        <div id="gallery" tabindex="0">
           <div class="gallery-slide stack-pos-0" data-index="0">
             <div class="gallery-photo-inner">
               <img
@@ -1628,28 +1719,46 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
     <script>
-      /* ================= Entrance doors ================= */
+      /* ================= Entrance: the invitation card opens, in slow motion, on tap only ================= */
       const doors = document.getElementById("doors");
+      const waxSeal = document.getElementById("wax-seal");
+      const sealBurst = document.getElementById("seal-burst");
       const enterCue = document.getElementById("enter-cue");
-      const enterRing = enterCue.querySelector(".ring");
+
+      function spawnSealSparks() {
+        const count = 14;
+        for (let i = 0; i < count; i++) {
+          const s = document.createElement("div");
+          s.className = "seal-spark";
+          const angle =
+            ((Math.PI * 2) / count) * i + (Math.random() * 0.4 - 0.2);
+          const dist = 28 + Math.random() * 32;
+          s.style.setProperty("--sx", Math.cos(angle) * dist + "px");
+          s.style.setProperty("--sy", Math.sin(angle) * dist + "px");
+          s.style.animationDelay = Math.random() * 0.12 + "s";
+          sealBurst.appendChild(s);
+        }
+        setTimeout(() => (sealBurst.innerHTML = ""), 1300);
+      }
+
+      // The invitation only opens when the person actually taps it — no
+      // auto-open on scroll. The sequence is staged in beats (seal breaks,
+      // ribbon falls away, the card swings open) but the fade into the
+      // site starts while the card is still finishing its motion, so there
+      // is no dead/idle pause that reads as "loading" once the opening
+      // itself is done.
+      let opened = false;
       function openDoors() {
-        enterRing.classList.add("tapped");
-        enterCue.classList.add("hide");
-        enterCue.style.transition = "opacity .2s ease";
-        enterCue.style.opacity = "0";
-        enterCue.style.pointerEvents = "none";
-        doors.classList.add("open");
-        setTimeout(() => doors.classList.add("hidden"), 1850);
+        if (opened) return;
+        opened = true;
+        doors.classList.add("opening");
+        spawnSealSparks();
+        setTimeout(() => doors.classList.add("fade-out"), 1550);
+        setTimeout(() => doors.classList.add("hidden"), 1600);
         startMusicByDefault();
       }
+      waxSeal.addEventListener("click", openDoors);
       enterCue.addEventListener("click", openDoors);
-      window.addEventListener(
-        "scroll",
-        () => {
-          if (!doors.classList.contains("open")) openDoors();
-        },
-        { once: true, passive: true },
-      );
 
       /* ================= Language toggle ================= */
       let lang = "en";
@@ -1818,70 +1927,13 @@
         return cleared / (sw * sh);
       }
 
-      // festive confetti palette — warm golds/maroons from the theme plus
-      // a few bright accent colours so the blast actually reads as colourful
-      const CONFETTI_COLORS = [
+      // refined gold-tone palette for the reveal — elegant, not confetti
+      const SPARKLE_COLORS = [
         "#c6963c", // gold
         "#e9cd8b", // gold light
-        "#6b1029", // maroon
-        "#ffffff", // ivory/white
-        "#e0574f", // coral red
-        "#2e8b7c", // teal
-        "#e6a23c", // amber
-        "#c04fae", // magenta pink
-        "#4f8fe6", // sky blue
+        "#f6e6bf", // pale gold
+        "#ffffff", // soft white
       ];
-
-      function spawnBurst() {
-        const layer = document.getElementById("burst-layer");
-
-        // central flash
-        const flash = document.createElement("div");
-        flash.className = "burst-flash";
-        layer.appendChild(flash);
-
-        // 2-3 expanding shockwave rings in different colours, staggered
-        const ringCount = 3;
-        for (let r = 0; r < ringCount; r++) {
-          const ring = document.createElement("div");
-          ring.className = "burst-ring";
-          ring.style.setProperty(
-            "--ring-color",
-            CONFETTI_COLORS[r % CONFETTI_COLORS.length],
-          );
-          ring.style.animationDelay = r * 0.09 + "s";
-          layer.appendChild(ring);
-        }
-
-        // confetti burst: mixed shapes, sizes and colours flying outward while spinning
-        const count = 34;
-        for (let i = 0; i < count; i++) {
-          const dot = document.createElement("div");
-          dot.className = "burst-dot";
-          const angle =
-            ((Math.PI * 2) / count) * i + (Math.random() * 0.5 - 0.25);
-          const dist = 80 + Math.random() * 130;
-          const size = 5 + Math.random() * 6;
-          const isSquare = Math.random() > 0.5;
-          const color =
-            CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)];
-          const rot =
-            (Math.random() > 0.5 ? 1 : -1) * (280 + Math.random() * 360);
-
-          dot.style.setProperty("--bx", Math.cos(angle) * dist + "px");
-          dot.style.setProperty("--by", Math.sin(angle) * dist + "px");
-          dot.style.setProperty("--bsize", size + "px");
-          dot.style.setProperty("--bshape", isSquare ? "2px" : "50%");
-          dot.style.setProperty("--bcolor", color);
-          dot.style.setProperty("--brot", rot + "deg");
-          dot.style.animationDelay = Math.random() * 0.12 + "s";
-          layer.appendChild(dot);
-        }
-
-        setTimeout(() => {
-          layer.innerHTML = "";
-        }, 1500);
-      }
 
       function finishReveal() {
         if (revealed) return;
@@ -1889,7 +1941,6 @@
         scratchCard.classList.add("revealed");
         scratchCanvas.style.transition = "opacity .8s ease";
         scratchCanvas.style.opacity = "0";
-        spawnBurst();
       }
 
       function handleMove(pos) {
@@ -1971,15 +2022,29 @@
       }
       resetGalTimer();
 
+      gallery.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowLeft") {
+          e.preventDefault();
+          galPrev();
+        } else if (e.key === "ArrowRight") {
+          e.preventDefault();
+          galNext();
+        }
+      });
+
       // drag the front card directly, like flicking the top photo off a pile
       let galStartX = null,
         galStartY = null,
         galDeltaX = 0,
         galDragging = false,
         galFrontEl = null,
-        galPointerId = null;
+        galPointerId = null,
+        galVelocity = 0,
+        galLastMoveTime = 0,
+        galLastDx = 0;
 
-      const GAL_SWIPE_THRESHOLD = 65;
+      const GAL_SWIPE_THRESHOLD = 55;
+      const GAL_FLICK_VELOCITY = 0.5; // px/ms
       const GAL_DRAG_LOCK = 8; // px of horizontal movement before we commit to a horizontal drag
 
       gallery.addEventListener("pointerdown", (e) => {
@@ -1990,6 +2055,9 @@
         galStartX = e.clientX;
         galStartY = e.clientY;
         galDeltaX = 0;
+        galVelocity = 0;
+        galLastMoveTime = 0;
+        galLastDx = 0;
         galPointerId = e.pointerId;
         if (galTimer) clearInterval(galTimer);
         // don't capture/preventDefault yet — wait to see if this is a
@@ -2013,8 +2081,11 @@
             resetGalTimer();
             return;
           }
-          // committed to a horizontal swipe: take over from here
+          // committed to a horizontal swipe: take over from here, and
+          // explicitly disable touch-action on this element only, for
+          // the duration of the drag, so the browser never intercepts it
           galFrontEl.classList.add("dragging");
+          galFrontEl.style.touchAction = "none";
           try {
             gallery.setPointerCapture(e.pointerId);
           } catch (err) {}
@@ -2022,13 +2093,21 @@
 
         e.preventDefault();
         galDeltaX = dx;
+        const now = performance.now();
+        if (galLastMoveTime) {
+          const dt = now - galLastMoveTime;
+          if (dt > 0) galVelocity = (galDeltaX - galLastDx) / dt;
+        }
+        galLastMoveTime = now;
+        galLastDx = galDeltaX;
+
         const rotate = -2.5 + galDeltaX * 0.06;
         galFrontEl.style.transform = `translate(calc(-50% + ${galDeltaX}px), 0) rotate(${rotate}deg)`;
         galFrontEl.style.opacity = String(
           1 - Math.min(Math.abs(galDeltaX) / 260, 0.5),
         );
       });
-      function galEndDrag(e) {
+      function galEndDrag() {
         if (!galDragging || !galFrontEl) {
           galDragging = false;
           galFrontEl = null;
@@ -2037,13 +2116,25 @@
         }
         galDragging = false;
         galFrontEl.classList.remove("dragging");
+        galFrontEl.style.touchAction = "";
         galFrontEl.style.transform = "";
         galFrontEl.style.opacity = "";
-        if (galDeltaX < -GAL_SWIPE_THRESHOLD) galNext();
-        else if (galDeltaX > GAL_SWIPE_THRESHOLD) galPrev();
-        else resetGalTimer();
+        const flick = Math.abs(galVelocity) > GAL_FLICK_VELOCITY;
+        if (galDeltaX < -GAL_SWIPE_THRESHOLD || (flick && galDeltaX < 0)) {
+          galNext();
+        } else if (
+          galDeltaX > GAL_SWIPE_THRESHOLD ||
+          (flick && galDeltaX > 0)
+        ) {
+          galPrev();
+        } else {
+          resetGalTimer();
+        }
         galFrontEl = null;
         galPointerId = null;
+        galVelocity = 0;
+        galLastMoveTime = 0;
+        galLastDx = 0;
       }
       gallery.addEventListener("pointerup", galEndDrag);
       gallery.addEventListener("pointercancel", galEndDrag);
